@@ -54,3 +54,32 @@ function removeNewlines(css){
 
     return string;
 }
+
+// Removes comment in this form /* */
+
+function removeComments(css) {
+    if(!css){
+        return "";
+    }
+
+    let string = "";
+    let j = 0;
+    let appendChar = true;
+
+    for (let i = 0; i < css.length; i++) {
+        let char = css[i];
+
+        if (char == "/" && css[i + 1] == "*") {
+            appendChar = false;
+        } else if (char == "*" && css[i + 1] == "/") {
+            j = 2;
+            appendChar = true;
+        }
+
+        if (j-- <= 0 && appendChar == true) {
+            string += char;
+        }
+    }
+
+    return string;
+}
