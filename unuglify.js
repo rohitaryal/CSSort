@@ -13,7 +13,7 @@ function getCSS(path) {
         string = readFileSync(path);
         string = string.toString();
     } catch (e) {
-        console.log(e);
+        console.log("[!] File not found. Put it in current directory.");
         process.exit(1);
     }
 
@@ -157,12 +157,21 @@ function sortLines(css) {
     return string;
 }
 
-let inFile = "samples/sample1.css";
-let outFile = "new.css";
+let inFile = process.argv[2];
+let outFile = process.argv[3];
+
+if(!inFile){
+    console.log("[!] No input file given.");
+    console.log("    Try: bun unuglify.js samples/sample1.css out.css");
+    process.exit(1);
+}
+
+outFile = outFile ?? "out.css";
 
 let css = getCSS(inFile);
-
 let sorted = sortLines(css);
+
+console.log(process.argv);
 
 try {
     writeFileSync(join(__dirname, outFile), sorted);
