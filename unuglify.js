@@ -113,6 +113,7 @@ function sortLines(css) {
     }
 
     css = removeComments(css);
+    css = css.replaceAll("; ", ";");
 
     let string = "";
 
