@@ -166,6 +166,7 @@ if(!inFile){
     process.exit(1);
 }
 
+// Default output file
 outFile = outFile ?? "out.css";
 
 let css = getCSS(inFile);
