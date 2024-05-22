@@ -158,3 +158,11 @@ function sortLines(css) {
 
     return string;
 }
+
+let inFile = "samples/sample1.css";
+let outFile = "new.css";
+
+let css = getCSS(inFile);
+
+let sorted = sortLines(css);
+fs.writeFileSync(join(__dirname, outFile), sorted);
