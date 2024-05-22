@@ -171,8 +171,6 @@ outFile = outFile ?? "out.css";
 let css = getCSS(inFile);
 let sorted = sortLines(css);
 
-console.log(process.argv);
-
 try {
     writeFileSync(join(__dirname, outFile), sorted);
     console.log("[+] Written formatted CSS to " + outFile);
