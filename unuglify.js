@@ -1,8 +1,26 @@
 const { join } = require("path");
 const { readFileSync, writeFileSync } = require("fs");
 
+// Reads the CSS file
+function getCSS(path) {
+    if (!path) {
+        return "";
+    }
 
-// Checks only for valid parenthesis nothing more.
+    let string = "";
+
+    try {
+        string = readFileSync(path);
+        string = string.toString();
+    } catch (e) {
+        console.log(e);
+        process.exit(1);
+    }
+
+    return string;
+}
+
+// Checks only for valid parenthesis nothing more
 function isValidCSS(css) {
     if (!css) {
         return false;
@@ -30,9 +48,9 @@ function isValidCSS(css) {
 }
 
 // Removes new lines
-function removeNewlines(css){
+function removeNewlines(css) {
 
-    if(!css){
+    if (!css) {
         return "";
     }
 
@@ -40,14 +58,14 @@ function removeNewlines(css){
 
     let j = 0;
 
-    for(let i = 0; i < css.length; i++){
+    for (let i = 0; i < css.length; i++) {
         let char = css[i];
 
-        if(char == "\n" && css[i+1] == "\n"){
+        if (char == "\n" && css[i + 1] == "\n") {
             j = 1;
         }
 
-        if(j-- <= 0) {
+        if (j-- <= 0) {
             string += char;
         }
     }
@@ -57,7 +75,7 @@ function removeNewlines(css){
 
 // Removes comment in this form /* */
 function removeComments(css) {
-    if(!css){
+    if (!css) {
         return "";
     }
 
@@ -83,29 +101,9 @@ function removeComments(css) {
     return string;
 }
 
-// Reads the CSS file
-function getCSS(path) {
-    if(!path){
-        return "";
-    }
-
-    let string = "";
-    let cssFile = join(__dirname, path);
-
-    try {
-        string = fs.readFileSync(path);
-        string = string.toString();
-    } catch (e) {
-        console.log(e);
-        process.exit(1);
-    }
-
-    return string;
-}
-
 // Main sorter function
 function sortLines(css) {
-    if(!css){
+    if (!css) {
         return "";
     }
 
@@ -165,4 +163,10 @@ let outFile = "new.css";
 let css = getCSS(inFile);
 
 let sorted = sortLines(css);
-fs.writeFileSync(join(__dirname, outFile), sorted);
+
+try {
+    writeFileSync(join(__dirname, outFile), sorted);
+    console.log("[+] Written formatted CSS to " + outFile);
+} catch(e){
+    console.log("Failed to write into file.");
+}
