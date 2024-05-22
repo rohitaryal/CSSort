@@ -1,5 +1,7 @@
-# CSSort
-Un-uglify your ugly CSS.
+<center><img src="./samples/banner.png" style="border-radius: 20px"></center>
+
+<br>
+Un-uglify your ugly CSS by removing comments, unwanted linebreaks, tabs, etc. 
 
 ### 📁 Requirements
 - nodejs
