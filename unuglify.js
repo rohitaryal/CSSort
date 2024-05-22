@@ -83,3 +83,78 @@ function removeComments(css) {
     return string;
 }
 
+// Reads the CSS file
+function getCSS(path) {
+    if(!path){
+        return "";
+    }
+
+    let string = "";
+    let cssFile = join(__dirname, path);
+
+    try {
+        string = fs.readFileSync(path);
+        string = string.toString();
+    } catch (e) {
+        console.log(e);
+        process.exit(1);
+    }
+
+    return string;
+}
+
+// Main sorter function
+function sortLines(css) {
+    if(!css){
+        return "";
+    }
+
+    if (!isValidCSS(css)) {
+        console.log("Can't sort invalid CSS.");
+        return;
+    }
+
+    css = removeComments(css);
+
+    let string = "";
+
+    let currentElement = "";
+    let currentBody = "";
+
+    let recordElement = true;
+    let recordBody = false;
+
+    let j = 0;
+
+    for (let i = 0; i < css.length; i++) {
+        let char = css[i];
+
+        if (char == "{") {
+            recordBody = true;
+            recordElement = false;
+        } else if (char == "}") {
+            recordBody = false;
+            recordElement = true;
+
+            currentBody = currentBody.split("\n");
+
+            currentBody.sort((a, b) => a.length - b.length);
+            currentBody.unshift(currentElement + "{");
+            currentBody.push("}");
+
+            currentBody = currentBody.join("\n");
+            currentBody = removeNewlines(currentBody);
+
+            string += currentBody + "\n";
+
+            currentBody = "";
+            currentElement = "";
+        } else if (recordElement == true) {
+            currentElement += char;
+        } else if (recordBody == true) {
+            currentBody += char;
+        }
+    }
+
+    return string;
+}
