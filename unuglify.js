@@ -56,7 +56,6 @@ function removeNewlines(css){
 }
 
 // Removes comment in this form /* */
-
 function removeComments(css) {
     if(!css){
         return "";
@@ -83,3 +82,4 @@ function removeComments(css) {
 
     return string;
 }
+
