@@ -9,7 +9,7 @@ Un-uglify your ugly CSS by removing comments, unwanted linebreaks, tabs, etc.
 ### 🍭 How to use?
 ```bash
 git clone https://github.com/rohitaryal/CSSort.git
-cd CSSort
+cd un-uglify.js
 node unuglify.js samples/sample1.css out.css
 cat out.css
 ```
